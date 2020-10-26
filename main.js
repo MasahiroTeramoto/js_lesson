@@ -24,37 +24,13 @@ class TravisQuiz {
     this.arr = json.results;
   }
 
-  nextQuiz() {
-    const answers = document.getElementById('answers');
-
-    while (answers.lastChild) {
-      answers.removeChild(answers.lastChild);
-    }
-
-    if (this.ans === this.TravisQuizClass.correctAns) {
-      this.TravisQuizClass.correctNumber++;
-    }
-
-    this.TravisQuizClass.index++;
-    this.TravisQuizClass.createHtml();
-  }
-
-  shuffleAnswers(answers) {
-    for (let i = answers.length - 1; i > 0; i--) {
-      var j = Math.floor(Math.random() * (i + 1));
-      var tmp = answers[i];
-      answers[i] = answers[j];
-      answers[j] = tmp;
-    }
-    return answers;
-  }
-
   createResultHtml(title, genre, difficulty, quiz) {
     title.textContent = `あなたの正当数は${this.correctNumber}`;
     quiz.textContent = '再度チャレンジしたい場合は以下をクリック！';
     genre.textContent = '';
     difficulty.textContent = '';
   }
+
   createQuizHtml(title, genre, difficulty, quiz, answers) {
     this.correctAns = this.arr[this.index].correct_answer;
     this.answers = this.arr[this.index].incorrect_answers;
@@ -101,6 +77,31 @@ class TravisQuiz {
       this.createResultHtml(title, genre, difficulty, quiz);
       homeBtn.hidden = false;
     }
+  }
+
+  shuffleAnswers(answers) {
+    for (let i = answers.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var tmp = answers[i];
+      answers[i] = answers[j];
+      answers[j] = tmp;
+    }
+    return answers;
+  }
+
+  nextQuiz() {
+    const answers = document.getElementById('answers');
+
+    while (answers.lastChild) {
+      answers.removeChild(answers.lastChild);
+    }
+
+    if (this.ans === this.TravisQuizClass.correctAns) {
+      this.TravisQuizClass.correctNumber++;
+    }
+
+    this.TravisQuizClass.index++;
+    this.TravisQuizClass.createHtml();
   }
 }
 
