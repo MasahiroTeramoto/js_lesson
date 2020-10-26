@@ -16,7 +16,7 @@ class TravisQuiz {
     this.token = json.token;
   }
 
-  async createQuiz() {
+  async getTravisQuiz() {
     const res = await fetch(
       `https://opentdb.com/api.php?amount=10&token=${this.token}`
     );
@@ -130,6 +130,6 @@ const startQuiz = async () => {
   quiz.textContent = '少々お待ちください';
 
   await travis.getToken();
-  await travis.createQuiz();
+  await travis.getTravisQuiz();
   travis.createHtml();
 };
