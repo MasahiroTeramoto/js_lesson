@@ -2,7 +2,7 @@ class Quizizz {
   constructor(apiUrl, tokenUrl) {
     this.apiUrl = apiUrl;
     this.tokenUrl = tokenUrl;
-    this.token = null;
+    this.token = undefined;
     this.quizizz = [];
     this.correctNumber = 0;
     this.index = 0;
@@ -140,7 +140,6 @@ const createQuizHtml = (
       'click',
       {
         ans,
-        quiz,
         quizizz,
         quizizzClass,
         handleEvent: nextQuizStep,
@@ -159,11 +158,6 @@ const createHtml = (quizizzClass, quizizz) => {
   const homeBtnDom = document.getElementById('home-btn');
   const quizizzNum = quizizzClass.getQuzziz().length;
   const index = quizizzClass.getIndex();
-  const quiz = quizizz[index];
-
-  console.log('quizizzNum: ', quizizzNum);
-  console.log('index: ', index);
-  console.log('quiz: ', quiz);
 
   if (quizizzNum > index) {
     createQuizHtml(
@@ -184,14 +178,13 @@ const createHtml = (quizizzClass, quizizz) => {
 // event function
 
 const nextQuizStep = function (e) {
-  console.log(this);
-  console.log('ans: ', this.ans);
-  console.log('quiz: ', this.quiz);
-  console.log('quizizzClass: ', this.quizizzClass);
-  this.quiz.setAnswer(this.ans);
-  isCorrect = this.quiz.checkCorrect();
+  const index = this.quizizzClass.getIndex();
+  const quiz = this.quizizz[index];
 
-  if (isCorrect) {
+  quiz.setAnswer(this.ans);
+  isCorrectAnswer = quiz.checkCorrect();
+
+  if (isCorrectAnswer) {
     this.quizizzClass.setCorrectNumber();
   }
   this.quizizzClass.nextQuiz();
