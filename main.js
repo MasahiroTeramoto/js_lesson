@@ -50,8 +50,8 @@ class Quizizz {
 }
 
 class Quiz {
-  constructor(index, category, difficulty, question, answers, correctAns) {
-    this.index = index;
+  constructor(id, category, difficulty, question, answers, correctAns) {
+    this.id = id;
     this.title = title;
     this.category = category;
     this.difficulty = difficulty;
@@ -90,8 +90,8 @@ class Quiz {
     return this.answers;
   }
 
-  getIndex() {
-    return this.index;
+  getId() {
+    return this.id;
   }
 
   checkCorrect() {
@@ -127,7 +127,7 @@ const createQuizHtml = (
 ) => {
   const index = quizizzClass.getIndex();
   const quiz = quizizz[index];
-  titleDom.textContent = `問題${quiz.getIndex() + 1}`;
+  titleDom.textContent = `問題${quiz.getId() + 1}`;
   categoryDom.textContent = `[ジャンル]${quiz.getCategory()}`;
   difficultyDom.textContent = `[難易度]${quiz.getDifficulty()}`;
   questionDom.textContent = quiz.getQuestion();
