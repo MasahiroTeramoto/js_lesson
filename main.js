@@ -28,7 +28,7 @@ class Quizizz {
     this.quizizz = json.results;
   }
 
-  setCorrectNumber() {
+  addCorrectNumber() {
     this.correctNumber++;
   }
 
@@ -68,7 +68,6 @@ class Quiz {
       this.answers[i] = this.answers[j];
       this.answers[j] = tmp;
     }
-    this.this.answers = this.answers;
   }
 
   setAnswer(answer) {
@@ -83,12 +82,16 @@ class Quiz {
     return this.difficulty;
   }
 
-  getQuiz() {
-    return this.quiz;
+  getQuestion() {
+    return this.question;
   }
 
   getAnswers() {
     return this.answers;
+  }
+
+  getIndex() {
+    return this.index;
   }
 
   checkCorrect() {
@@ -124,12 +127,12 @@ const createQuizHtml = (
 ) => {
   const index = quizizzClass.getIndex();
   const quiz = quizizz[index];
-  titleDom.textContent = `問題${quiz.index + 1}`;
-  categoryDom.textContent = `[ジャンル]${quiz.category}`;
-  difficultyDom.textContent = `[難易度]${quiz.difficulty}`;
-  questionDom.textContent = quiz.question;
+  titleDom.textContent = `問題${quiz.getIndex() + 1}`;
+  categoryDom.textContent = `[ジャンル]${quiz.getCategory()}`;
+  difficultyDom.textContent = `[難易度]${quiz.getDifficulty()}`;
+  questionDom.textContent = quiz.getQuestion();
 
-  quiz.answers.forEach((ans) => {
+  quiz.getAnswers().forEach((ans) => {
     const answerDom = document.createElement('button');
     const br = document.createElement('br');
     answerDom.textContent = ans;
@@ -185,7 +188,7 @@ const nextQuizStep = function (e) {
   isCorrectAnswer = quiz.checkCorrect();
 
   if (isCorrectAnswer) {
-    this.quizizzClass.setCorrectNumber();
+    this.quizizzClass.addCorrectNumber();
   }
   this.quizizzClass.nextQuiz();
 
@@ -227,6 +230,7 @@ const startQuiz = async () => {
       answers,
       d.correct_answer
     );
+    quiz.shuffleAnswers();
     quizizz.push(quiz);
   });
 
