@@ -2,7 +2,7 @@ class Quizizz {
   constructor(apiUrl, tokenUrl) {
     this.apiUrl = apiUrl;
     this.tokenUrl = tokenUrl;
-    this.token = undefined;
+    this.token = null;
     this.quizizz = [];
     this.correctNumber = 0;
     this.index = 0;
